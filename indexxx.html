@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        
+
+        var ws = new WebSocket('ws://localhost:40513',"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkRhdGEiOnsiX2lkIjoiNTliOTlkYjRjZmE5YTM0ZGNkNzg4NWI2In0sImlhdCI6MTcxMjgyOTg3MCwiZXhwIjoxNzEyODI5OTAwfQ.IeYGiSP9Jhp0f4iYalRrqGiTW569aCAq7s5TZhA9-Ns");
+        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbkRhdGEiOnsiX2lkIjoiNTliOTlkYjRjZmE5YTM0ZGNkNzg4NWI2In0sImlhdCI6MTcxMjgyOTcxMiwiZXhwIjoxNzEyODI5NzIyfQ.a44v8RJUbcz73FJ8qvPUgdvi5ImJFaeEivd7RugcAH0
+        ws.onopen = function () {
+            console.log('websocket is connected ...')
+            // ws.send('connected')
+        }
+
+        ws.onmessage = function (ev) {
+            const data = JSON.parse(ev.data);
+            updateTable(data);
+            // setInterval(
+            //     () => {
+            //         updateTable(data);
+            //     },
+            //     3000
+            // )
+            console.log(ev);
+        }
+        function updateTable(data) {
+            const tableBody = document.querySelector('#dataTable tbody');
+            tableBody.innerHTML = '';
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.email}</td>
+          <td>${item.current_date_time}</td>
+          <!-- Add more columns as needed -->
+        `;
+                tableBody.appendChild(row);
+            });
+        }
+
+
+
+    </script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>The thead, tbody, and tfoot elements</h1>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic Data render here -->
+        </tbody>
+    </table>
+    
+</body>
+
+</html>
